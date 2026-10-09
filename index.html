@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- CRITICAL FIX: Prevent zoom and ensure width is exactly device width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>usBank - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="usbank_logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container" id="app-container" style="display: none;">
+        
+        <!-- Mobile Header Bar -->
+        <div class="mobile-header">
+            <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <img src="usbank_logo.svg" alt="Alder Logo" class="mobile-logo">
+            <div class="avatar">AR</div>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <button class="sidebar-close-btn" onclick="toggleSidebar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            
+            <div class="logo-container">
+                <img src="usbank_logo2.png" alt="Alder Logo" id="brand-logo">
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <span class="nav-label">YOUR BANKING</span>
+                    <a href="#" class="nav-item active">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        Overview
+                    </a>
+                    <a href="#account" class="nav-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4z"/></svg>
+                        Accounts
+                    </a>
+                    <a href="#" class="nav-item" onclick="openPopup()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                        Transfers
+                    </a>
+                    <a href="#" class="nav-item" onclick="openPopup()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                        Payments
+                    </a>
+                    <a href="#card" class="nav-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                        Cards
+                    </a>
+                    <!-- <a href="#" class="nav-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        Insights
+                    </a> -->
+                    <a href="#saving_goal" class="nav-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                        Savings goals
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <a href="#" class="nav-item" onclick="authenticateWithPasskey()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        Notifications
+                        <span class="badge">2</span>
+                    </a>
+                    <a href="#" class="nav-item" onclick="authenticateWithPasskey()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        Settings
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="support-card">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <h4>A real person, ready to help.</h4>
+                    <p>Our team is here for you, 24 hours a day, 7 days a week.</p>
+                    <a href="https://www.usbank.com/customer-service.html">Contact support &rarr;</a>
+                </div>
+                <a href="login.html" class="nav-item sign-out" onclick="sessionStorage.removeItem('isLoggedIn')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    Sign out
+                </a>
+                <div class="encryption-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    256-bit encrypted connection
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Header -->
+            <header class="top-header">
+                <div class="breadcrumbs">
+                    Personal banking &rsaquo; <span>Overview</span>
+                </div>
+                <div class="header-actions">
+                    <!-- <div class="search-bar">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" placeholder="Search banking">
+                        <span class="shortcut">⌘ K</span>
+                    </div> -->
+                    <button class="icon-btn notification-btn" onclick="authenticateWithPasskey()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <span class="dot"></span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">AR</div>
+                        <div class="user-info">
+                            <span class="name">Annah</span>
+                            <span class="role">Personal account</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                
+                <!-- Greeting Section -->
+                <div class="greeting-section">
+                    <div class="greeting-text">
+                        <!-- Added id="current-date" here -->
+                        <span class="date" id="current-date">THURSDAY, OCTOBER 8, 2026</span>
+                        <h1>Welcome back, Annah.</h1>
+                        <p>Here's where you stand. And where you can go next.</p>
+                    </div>
+                    <div class="greeting-actions">
+                        <button class="btn btn-outline" onclick="openPopup()">Pay a bill <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></button>
+                        <button class="btn btn-primary" onclick="openPopup()">Transfer money <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg></button>
+                    </div>
+                </div>
+
+                <!-- Total Balance & Eye Toggle -->
+                <div class="total-balance-section">
+                    <div class="total-balance-label">
+                        Total deposits <span class="balance-amount" id="total-deposits" style="font-size: 18px;">$38,450.75</span>
+                        <button class="eye-toggle" id="eye-toggle" onclick="toggleBalances()">
+                            <svg id="eye-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            <svg id="eye-closed" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                        </button>
+                        <span class="balance-note">Updated just now</span>
+                    </div>
+                </div>
+
+                <!-- Account Cards Grid -->
+                <div class="account-cards-grid" id="account">
+                    <!-- Everyday Checking -->
+                    <div class="account-card dark-card" >
+                        <div class="card-header">
+                            <div class="card-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                Fixed Deposite
+                            </div>
+                            <svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </div>
+                        <div class="card-balance" id="checking-balance">$556,450.75</div>
+                        <div class="card-footer">
+                            <span>Available balance</span>
+                            <span>•••• 4821</span>
+                        </div>
+                    </div>
+
+                    <!-- High-yield Savings -->
+                    <div class="account-card light-card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                High-yield Savings
+                            </div>
+                            <svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </div>
+                        <div class="card-balance" id="savings-balance">$190,634.45</div>
+                        <div class="card-footer">
+                            <span>Available balance</span>
+                            <span>4.00% APY</span>
+                        </div>
+                    </div>
+
+                    <!-- Alder Credit -->
+                    <div class="account-card light-card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                Credit Card
+                            </div>
+                            <svg class="card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </div>
+                        <div class="card-balance" id="credit-balance">$9,240.50</div>
+                        <div class="card-footer">
+                            <span>Current balance owed - $10,000 limit</span>
+                            <span>$59.46 available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Grid Layout -->
+                <div class="dashboard-grid">
+                    
+                    <!-- Left Column -->
+                    <div class="grid-left">
+                        
+                        <!-- Recent Transactions -->
+                        <div class="panel transactions-panel">
+                            <div class="panel-header">
+                                <h2>Recent transactions</h2>
+                                <a href="#" class="view-all" onclick="authenticateWithPasskey()">View all &rarr;</a>
+                            </div>
+                            <div class="panel-subheader">
+                                <select class="filter-select"><option>All accounts</option></select>    
+                            </div>
+                            <div class="transaction-list">
+                                <div class="transaction-item">
+                                    <div class="tx-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div>
+                                    <div class="tx-details">
+                                        <span class="tx-name">Whole Foods Market</span>
+                                        <span class="tx-cat">Groceries - credit </span>
+                                    </div>
+                                    <div class="tx-date">oct 08, 2026</div>
+                                    <div class="tx-status completed">Completed</div>
+                                    <div class="tx-amount negative">-$86.42</div>
+                                </div>
+                                <div class="transaction-item">
+                                    <div class="tx-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg></div>
+                                    <div class="tx-details">
+                                        <span class="tx-name">Blue Bottle Coffee</span>
+                                        <span class="tx-cat">Dining - credit •• </span>
+                                    </div>
+                                    <div class="tx-date">Oct 05, 2026</div>
+                                    <div class="tx-status pending">Pending</div>
+                                    <div class="tx-amount negative">-$8.50</div>
+                                </div>
+                                
+                                <div class="transaction-item">
+                                    <div class="tx-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg></div>
+                                    <div class="tx-details">
+                                        <span class="tx-name">PG&E</span>
+                                        <span class="tx-cat">Utilities - credit</span>
+                                    </div>
+                                    <div class="tx-date">Oct 03, 2026</div>
+                                    <div class="tx-status completed">Completed</div>
+                                    <div class="tx-amount negative">-$94.60</div>
+                                </div>
+                                <div class="transaction-item">
+                                    <div class="tx-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div>
+                                    <div class="tx-details">
+                                        <span class="tx-name">Whole food market</span>
+                                        <span class="tx-cat">Groceries - credit</span>
+                                    </div>
+                                    <div class="tx-date">sept 08, 2026</div>
+                                    <div class="tx-status completed">Completed</div>
+                                    <div class="tx-amount negative">-$112.32</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Spending Insights
+                        <div class="panel insights-panel">
+                            <div class="panel-header">
+                                <h2>Spending insights</h2>
+                                <select class="filter-select"><option>October 2026</option></select>
+                            </div>
+                            <div class="insights-summary">
+                                <div class="insight-stat">
+                                    <span class="stat-label">Money in</span>
+                                    <span class="stat-value">$5,400.00</span>
+                                </div>
+                                <div class="insight-stat">
+                                    <span class="stat-label">Money out</span>
+                                    <span class="stat-value">$2,480.00</span>
+                                </div>
+                                <div class="insight-stat">
+                                    <span class="stat-label">Net cash flow</span>
+                                    <span class="stat-value positive">+$2,920.00</span>
+                                </div>
+                            </div>
+                            <div class="insights-chart-area">
+                                <div class="donut-chart">
+                                    <div class="donut-inner">
+                                        <span class="donut-val">$2,480</span>
+                                        <span class="donut-label">Spent this month</span>
+                                    </div>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item"><span class="dot housing"></span> Housing & bills <span class="val">$1,380</span></div>
+                                    <div class="legend-item"><span class="dot groceries"></span> Groceries <span class="val">$420</span></div>
+                                    <div class="legend-item"><span class="dot dining"></span> Dining <span class="val">$280</span></div>
+                                    <div class="legend-item"><span class="dot shopping"></span> Shopping <span class="val">$250</span></div>
+                                    <div class="legend-item"><span class="dot transport"></span> Transport <span class="val">$180</span></div>
+                                    <div class="legend-item"><span class="dot subscriptions"></span> Subscriptions <span class="val">$150</span></div>
+                                </div>
+                                <div class="bar-chart">
+                                    <div class="bar-group">
+                                        <span class="bar-label">1-2</span>
+                                        <div class="bar" style="height: 80%;"></div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <span class="bar-label">3-4</span>
+                                        <div class="bar" style="height: 40%;"></div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <span class="bar-label">5-6</span>
+                                        <div class="bar" style="height: 30%;"></div>
+                                    </div>
+                                    <div class="bar-group">
+                                        <span class="bar-label">7-8</span>
+                                        <div class="bar" style="height: 20%;"></div>
+                                    </div>
+                                    <div class="bar-chart-label">October · through Oct 8</div>
+                                </div>
+                            </div>
+                            <div class="insight-tip">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"></path><path d="M9 21h6"></path></svg>
+                                You've kept 54% of your income this month. A little breathing room goes a long way.
+                            </div>
+                            <p class="insight-disclaimer">Month-to-date - Includes pending purchases; excludes internal transfers.</p>
+                        </div> -->
+
+                        <!-- Savings Goals -->
+                        <div class="panel goals-panel" id="saving_goal">
+                            <div class="panel-header">
+                                <h2>Your savings goals</h2>
+                                <a href="#" class="view-all" onclick="authenticateWithPasskey()">+ New goal</a>
+                            </div>
+                            <div class="goals-grid">
+                                <div class="goal-card">
+                                    <div class="goal-header">
+                                        <div class="goal-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
+                                        <span class="goal-name">A little more freedom</span>
+                                        <svg class="goal-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                                    </div>
+                                    <div class="goal-sub">Travel fund · Jun 2027</div>
+                                    <div class="goal-amount"><span>$6,000</span> <span class="goal-target">/ $10,000</span></div>
+                                    <div class="progress-bar"><div class="progress" style="width: 60%;"></div></div>
+                                    <div class="goal-footer"><span>60%</span> <a href="#" onclick="openPopup()">Add money &rarr;</a></div>
+                                </div>
+                                <div class="goal-card">
+                                    <div class="goal-header">
+                                        <div class="goal-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+                                        <span class="goal-name">Ready for anything</span>
+                                        <svg class="goal-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                                    </div>
+                                    <div class="goal-sub">Emergency fund · Dec 2026</div>
+                                    <div class="goal-amount"><span>$18,000</span> <span class="goal-target">/ $20,000</span></div>
+                                    <div class="progress-bar"><div class="progress" style="width: 90%;"></div></div>
+                                    <div class="goal-footer"><span>90%</span> <a href="#" onclick="openPopup()">Add money &rarr;</a></div>
+                                </div>
+                            </div>
+                            <p class="goals-disclaimer">$24,000 assigned to goals · $6,000 unassigned in High-yield Savings</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="grid-right">
+                        
+                        <!-- Move Your Money -->
+                        <div class="panel move-money-panel">
+                            <div class="panel-header">
+                                <h2>Move your money</h2>
+                                <a href="#" class="view-all" onclick="authenticateWithPasskey()">New payee +</a>
+                            </div>
+                            <div class="move-actions">
+                                <button class="action-btn active" onclick="openPopup()">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+                                    Transfer
+                                </button>
+                                <button class="action-btn" onclick="openPopup()">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                    Pay a bill
+                                </button>
+                                <button class="action-btn" onclick="openPopup()">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
+                                    Deposit
+                                </button>
+                            </div>
+                            <div class="move-form">
+                                <div class="form-group">
+                                    <label>From</label>
+                                    <select id="transfer-from">
+                                        <option value="checking">Fixed Deposit •• 4821</option>
+                                        <option value="savings">High-yield Savings •• 9012</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>To</label>
+                                    <select id="transfer-to">
+                                        <option value="savings">Your savings •• 9012</option>
+                                        <option value="checking">Fixed Deposit •• 4821</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Amount</label>
+                                    <div class="amount-input">
+                                        <span>$</span>
+                                        <input type="number" value="500.00" step="0.01" min="0">
+                                    </div>
+                                </div>
+                                <div class="transfer-note">Instant transfer <span>No fee</span></div>
+                                <button class="btn btn-primary full-width" onclick="openPopup()">Review transfer &rarr;</button>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Payments
+                        <div class="panel upcoming-panel">
+                            <div class="panel-header">
+                                <h2>Upcoming payments</h2>
+                                <a href="#" class="view-all">Manage &rarr;</a>
+                            </div>
+                            <div class="upcoming-total">3 scheduled · <strong>$311.99 total</strong></div>
+                            <div class="upcoming-list">
+                                <div class="upcoming-item">
+                                    <div class="upcoming-date">12</div>
+                                    <div class="upcoming-details">
+                                        <span class="upcoming-name">Alder Credit</span>
+                                        <span class="upcoming-cat">Minimum payment · Autopay on</span>
+                                    </div>
+                                    <div class="upcoming-amount">$75.00</div>
+                                </div>
+                                <div class="upcoming-item">
+                                    <div class="upcoming-date">15</div>
+                                    <div class="upcoming-details">
+                                        <span class="upcoming-name">AT&T Internet</span>
+                                        <span class="upcoming-cat">Checking •• 4821 · Autopay on</span>
+                                    </div>
+                                    <div class="upcoming-amount">$65.00</div>
+                                </div>
+                                <div class="upcoming-item">
+                                    <div class="upcoming-date">18</div>
+                                    <div class="upcoming-details">
+                                        <span class="upcoming-name">State Farm</span>
+                                        <span class="upcoming-cat">Checking •• 4821 · Scheduled</span>
+                                    </div>
+                                    <div class="upcoming-amount">$171.99</div>
+                                </div>
+                            </div>
+                            <a href="#" class="schedule-link">+ Schedule a payment</a>
+                        </div> -->
+
+                        <!-- Your Cards -->
+                        <div class="panel cards-panel" id="card">
+                            <div class="panel-header">
+                                <h2>Your cards</h2>
+                                <a href="#" class="view-all" onclick="authenticateWithPasskey()">Manage &rarr;</a>
+                            </div>
+                            <div class="credit-card-visual">
+                                <div class="cc-top">
+                                    <span class="cc-brand"><span style="color: red;">us</span>bank</span>
+                                    <span class="cc-type">DEBIT</span>
+                                </div>
+                                <div class="cc-chip"></div>
+                                <div class="cc-number">•••• •••• •••• 4821</div>
+                                <div class="cc-bottom">
+                                    <span>Annah Rogers G</span>
+                                    <span class="cc-logo">VISA</span>
+                                </div>
+                            </div>
+                            <div class="cc-actions">
+                                <span class="cc-status">Active</span>
+                                <span class="cc-expiry">Expires 08/29</span>
+                            </div>
+                            <div class="cc-buttons">
+                                <button class="btn btn-outline" onclick="openPopup()">Freeze card ❄</button>
+                                <button class="btn btn-outline" onclick="openPopup()">Card details 👁</button>
+                            </div>
+                        </div>
+
+                        <!-- Notifications & Security
+                        <div class="panel security-panel">
+                            <div class="panel-header">
+                                <h2>Notifications & security</h2>
+                            </div>
+                            <div class="security-item">
+                                <div class="sec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+                                <div class="sec-text">
+                                    <strong>Your account is well protected</strong>
+                                    <span>Two-step verification is on.</span>
+                                    <a href="">Review sign-in activity &rarr;</a>
+                                </div>
+                            </div>
+                            <div class="security-item">
+                                <div class="sec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
+                                <div class="sec-text">
+                                    <strong>Your September statement is ready</strong>
+                                    <span>Oct 2 · View and download in Statements.</span>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </div>
+
+               <!-- NEW FOOTER -->
+<footer class="us-bank-footer">
+    <div class="footer-container">
+        
+        <!-- Social Media Icons -->
+        <div class="footer-socials">
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/checkpoint/1501092823525282/?next=https%3A%2F%2Fwww.facebook.com%2Fusbank%2F" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+            </a>
+            <!-- X (Twitter) -->
+            <a href="https://x.com/usbank" aria-label="X">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="www.instagram.com/usbank/" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Footer Links Grid -->
+        <div class="footer-links-grid">
+            <!-- Column 1 -->
+            <div class="footer-col">
+                <a href="https://www.usbank.com/customer-service.html?invoca_hold=true">Support</a>
+                <a href="https://www.usbank.com/site-map.html">Site map</a>
+                <a href="#">Your privacy choices <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/CC-BY-SA_icon.svg/32px-CC-BY-SA_icon.svg.png" alt="Privacy Options" class="privacy-icon" style="display:none;"> <span class="privacy-badge">✓✗</span></a>
+            </div>
+            
+            <!-- Column 2 -->
+            <div class="footer-col">
+                <a href="https://www.usbank.com/customer-service/online-security.html?invoca_hold=true">Security</a>
+                <a href="https://careers.usbank.com/global/en">Careers</a>
+                <a href="https://www.usbank.com/about-us-bank/alumni.html">Alumni</a>
+                <a>Cobrowse</a>
+            </div>
+            
+            <!-- Column 3 -->
+            <div class="footer-col">
+                <a href="https://www.usbank.com/prepaid-visa-gift-card.html">U.S. Bank Visa® Gift Card</a>
+                <a href="https://www.usbank.com/about-us-bank/accessibility.html">Accessibility</a>
+                <a href="https://www.usbank.com/about-us-bank/privacy.html?invoca_hold=true">Privacy</a>
+            </div>
+            
+            <!-- Column 4 -->
+            <div class="footer-col">
+                <p>U.S. Bank</p>
+                <p>200 S. Sixth St.</p>
+                <p>Minneapolis, MN 55402</p>
+                <p class="copyright">©2026 U.S. Bank</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="popup-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <h3>Action Not Available</h3>
+            <p>We're sorry, but you cannot perform this action at this time. Your account is currently fixed. You will need to wait for the maturity date before you can withdraw or transfer funds.</p>
+            <p><strong>Maturity dat:</strong> January 13th, 2027</p>
+            <button class="btn btn-primary" onclick="closePopup()">Understood</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
