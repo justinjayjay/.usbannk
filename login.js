@@ -19,7 +19,7 @@ function closeSidePanel() {
 }
 
 // --- Authentication Logic ---
-const VALID_USERNAME = "CallejasA   nn2025";
+const VALID_USERNAME = "CallejasAnn2025";
 const VALID_PASSWORD = "CalAnn77";
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
